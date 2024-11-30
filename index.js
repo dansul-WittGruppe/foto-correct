@@ -1,8 +1,8 @@
 import { clearFolders, create } from "./input.js";
 import fs from "fs"; // Import file system module
 
-clearFolders();
-await create();
+// clearFolders();
+// await create();
 
 const getIdsFromFolder = (folder) => {
   const files = fs.readdirSync(folder);
