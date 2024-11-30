@@ -13,13 +13,16 @@ const getIdsFromFolder = (folder) => {
   }, []);
 };
 
-const ids = getIdsFromFolder("in/copied");
+const ids = getIdsFromFolder("in/calender");
 
 const toCopy = ids.reduce((acc, id) => {
   const split = [...id.split("_")];
   if (split.length > 1) {
     acc.push(split[0]);
+  } else {
+    fs.copyFileSync(`in/original/${id}.jpeg`, `out/${id}.jpeg`);
   }
+
   return acc;
 }, []);
 

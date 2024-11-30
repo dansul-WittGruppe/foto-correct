@@ -65,5 +65,5 @@ public/
 # Windows
 Thumbs.db
 
-# /in
-# /out
+/in
+/out
