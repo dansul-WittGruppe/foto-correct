@@ -7,6 +7,8 @@ export const clearFolders = () => {
   fs.rmdirSync("in", { recursive: true });
   fs.mkdirSync("in");
   fs.mkdirSync("in/original");
+  fs.mkdirSync("in/original/a");
+  fs.mkdirSync("in/original/b");
   fs.mkdirSync("in/calender");
   fs.rmdirSync("out", { recursive: true });
   fs.mkdirSync("out");
@@ -28,7 +30,8 @@ async function createImages(ids) {
     const id = ids[i];
     try {
       const image = new Jimp({ width: 500, height: 500, color: 0xff0000ff }); // Create a red image (500x500 pixels)
-      await image.write(`in/original/${id}.jpeg`); // Save the image with the generated ID
+      const folder = i % 2 === 0 ? "a" : "b";
+      await image.write(`in/original/${folder}/${id}.jpeg`); // Save the image with the generated ID
       if (i % 2 === 0) {
         await image.write(`in/calender/${id}_105_c.jpeg`);
       } else {

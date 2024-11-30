@@ -15,12 +15,24 @@ const getIdsFromFolder = (folder) => {
 
 const ids = getIdsFromFolder("in/calender");
 
+const allFilesFromOriginalWithFolder = () => {
+  return fs.readdirSync("in/original").reduce((acc, folder) => {
+    const files = fs
+      .readdirSync(`in/original/${folder}`)
+      .map((file) => `in/original/${folder}/${file}`);
+    return [...acc, ...files];
+  }, []);
+};
+
+const orignalFiles = allFilesFromOriginalWithFolder("in/original");
+
 const toCopy = ids.reduce((acc, id) => {
   const split = [...id.split("_")];
   if (split.length > 1) {
     acc.push(split[0]);
   } else {
-    fs.copyFileSync(`in/original/${id}.jpeg`, `out/${id}.jpeg`);
+    const original = orignalFiles.find((f) => f.includes(id));
+    fs.copyFileSync(original, `out/${id}.jpeg`);
   }
 
   return acc;
@@ -28,7 +40,8 @@ const toCopy = ids.reduce((acc, id) => {
 
 const copyFilesToOut = (files) => {
   files.forEach((file) => {
-    fs.copyFileSync(`in/original/${file}.jpeg`, `out/${file}.jpeg`);
+    const original = orignalFiles.find((f) => f.includes(file));
+    fs.copyFileSync(original, `out/${file}.jpeg`);
   });
 };
 
